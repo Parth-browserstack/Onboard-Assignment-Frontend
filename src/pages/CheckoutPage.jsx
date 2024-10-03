@@ -1,15 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 import { removeFromCart } from '../features/cartSlice';
 
 const CheckoutPage = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigation
 
   const handleRemove = (item) => {
     dispatch(removeFromCart({ id: item.id })); // Pass only the id for removal
   };
 
   const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  const proceedToCheckout = () => {
+    navigate('/checkoutformpage'); // Navigate to checkout page
+  };
 
   return (
     <div className="container mx-auto p-6">
@@ -21,9 +27,9 @@ const CheckoutPage = () => {
           {cart.map((item) => (
             <div key={item.id} className="flex items-center mb-4 border p-4 rounded shadow-md hover:shadow-lg transition-shadow duration-200">
               <img
-                src={item.image} // Assuming each item has an image property
+                src={item.image}
                 alt={item.title}
-                className="h-24 w-24 object-cover rounded mr-4" // Adjust size as needed
+                className="h-24 w-24 object-cover rounded mr-4"
               />
               <div className="flex-1">
                 <h2 className="text-lg font-semibold">{item.title}</h2>
@@ -38,7 +44,12 @@ const CheckoutPage = () => {
             </div>
           ))}
           <h3 className="text-xl font-bold mt-6">Total: ${total.toFixed(2)}</h3>
-          <button className="bg-green-500 text-white py-2 px-4 rounded mt-4">Proceed to Checkout</button>
+          <button
+            onClick={proceedToCheckout}  // Trigger navigation on click
+            className="bg-green-500 text-white py-2 px-4 rounded mt-4"
+          >
+            Proceed to Checkout
+          </button>
         </div>
       )}
     </div>
