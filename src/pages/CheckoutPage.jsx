@@ -6,7 +6,7 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
 
   const handleRemove = (item) => {
-    dispatch(removeFromCart(item));
+    dispatch(removeFromCart({ id: item.id })); // Pass only the id for removal
   };
 
   const total = cart.reduce((sum, item) => sum + item.price, 0);

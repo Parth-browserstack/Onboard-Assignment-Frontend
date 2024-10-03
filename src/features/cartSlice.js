@@ -8,8 +8,19 @@ const cartSlice = createSlice({
       state.push(action.payload);
     },
     removeFromCart(state, action) {
-      return state.filter((item) => item.id !== action.payload.id);
+      const itemIndex = state.findIndex((item) => item.id === action.payload.id);
+    
+      if (itemIndex >= 0) {
+        if (state[itemIndex].quantity > 1) {
+          // Reduce the quantity by 1 if more than 1 exists
+          state[itemIndex].quantity -= 1;
+        } else {
+          // If the quantity is 1, remove the item from the cart
+          state.splice(itemIndex, 1);
+        }
+      }
     },
+    
   },
 });
 

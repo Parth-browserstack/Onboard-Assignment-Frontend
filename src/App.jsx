@@ -5,6 +5,8 @@ import ProductsPage from './pages/ProductsPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrdersPage from './pages/OrdersPage';
 import LoginPage from './pages/LoginPage';
+import ProductDetails from './pages/ProductDetails';
+
 function App() {
   return (
     <Provider store={store}>
@@ -16,6 +18,7 @@ function App() {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
           </Routes>
         </div>
       </Router>
