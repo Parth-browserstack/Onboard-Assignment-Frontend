@@ -40,3 +40,106 @@
 .read-the-docs {
   color: #888;
 }
+
+
+
+
+
+
+
+:root {
+  --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --line-height: 1.5;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --color-light: #333;
+  --color-dark: rgba(0, 0, 0, 0.87);
+  --background-light: #f7f9fc;
+  --background-dark: #ffffff;
+  --link-color: #007bff; /* A brighter link color */
+  --link-hover-color: #0056b3; /* Darker hover color */
+  --button-bg-dark: #e9ecef; /* Light button background */
+  --button-bg-light: #ffffff; /* White button background */
+  --button-border-color: #007bff; /* Border color */
+  --button-hover-bg: #f1f3f5; /* Button hover color */
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-dark);
+  background-color: var(--background-light);
+  margin: 0;
+  display: flex;
+  place-items: center;
+  flex-direction: column; /* Stack items vertically */
+  min-width: 320px;
+  min-height: 100vh;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: var(--font-weight-medium);
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: var(--link-hover-color);
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  margin: 0; /* Remove default margin */
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: var(--font-weight-medium);
+  font-family: inherit;
+  background-color: var(--button-bg-dark);
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+
+button:hover {
+  border-color: var(--button-border-color);
+  background-color: var(--button-hover-bg);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-dark: rgba(255, 255, 255, 0.87);
+    --background-light: #242424;
+    --button-bg-dark: #3a3a3a; /* Darker button background */
+  }
+
+  a {
+    color: #0095ff; /* Bright link color in dark mode */
+  }
+
+  a:hover {
+    color: #80bfff; /* Light hover color in dark mode */
+  }
+
+  button {
+    background-color: #4a4a4a; /* Darker button in dark mode */
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
+
