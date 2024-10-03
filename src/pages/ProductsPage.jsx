@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../features/productsSlice';
-import { addToCart } from '../features/cartSlice';
-
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -12,23 +10,28 @@ const ProductsPage = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
+  console.log(products)
   return (
     <div>
       <h1>Products</h1>
       {status === 'loading' && <p>Loading...</p>}
-      {status === 'failed' && <p>{error}</p>}
-      <div className="grid grid-cols-3 gap-4">
-        {products.map((product) => (
-          <div key={product.id} className="border p-4">
-            <img src={product.image} alt={product.name} />
-            <h2>{product.name}</h2>
-            <p>{product.price}</p>
-            <button onClick={() => dispatch(addToCart(product))}>Add to Cart</button>
-          </div>
-        ))}
+      {status === 'failed' && <p>Error fetching products: {error}</p>}
+      <div className="product-list">
+        {status === 'succeeded' && Array.isArray(products) && products.length > 0 ? (
+          products.map((product, index) => (
+            <div key={product.id || index}>
+              <h2>{product.title}</h2>
+              <p>${product.price}</p>
+            </div>
+          ))
+        ) : (
+          <p>No products available.</p>
+        )}
       </div>
     </div>
   );
+  
+  
 };
 
 export default ProductsPage;

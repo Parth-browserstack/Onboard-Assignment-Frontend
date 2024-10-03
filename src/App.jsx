@@ -47,6 +47,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App">
+        
           <Routes>
             <Route path="/" element={<ProductsPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />

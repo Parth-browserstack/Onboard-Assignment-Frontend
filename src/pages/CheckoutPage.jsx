@@ -7,7 +7,7 @@ const CheckoutPage = () => {
 
   return (
     <div>
-      <h1>Checkout</h1>
+      <h1 className='text-red-800 font-medium'>Checkout</h1>
       <div>
         {cart.map((item) => (
           <div key={item.id}>

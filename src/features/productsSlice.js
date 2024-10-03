@@ -9,6 +9,7 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
   const response = await axios.get('https://fake-ecommerce-app-api.onrender.com/products');
+  // console.log(response.data);
   return response.data;
 });
 
