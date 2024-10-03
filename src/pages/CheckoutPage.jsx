@@ -22,8 +22,8 @@ const CheckoutPage = () => {
             <div key={item.id} className="mb-4 border p-4 rounded">
               <h2 className="text-lg font-semibold">{item.title}</h2>
               <p>${item.price}</p>
-              <button 
-                onClick={() => handleRemove(item)} 
+              <button
+                onClick={() => handleRemove(item)}
                 className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 transition-colors duration-200"
               >
                 Remove
