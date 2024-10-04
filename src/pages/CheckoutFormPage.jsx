@@ -1,13 +1,16 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addOrder } from '../features/orderSlice'; // Adjust the import path
 
 const CheckoutFormPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate
   const cart = useSelector((state) => state.cart);
 
   // Corrected total calculation accounting for item quantities
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // State for user details
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
     address: '',
@@ -30,10 +33,20 @@ const CheckoutFormPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Process the payment and order here
-    console.log('Shipping Info:', shippingInfo);
-    console.log('Payment Info:', paymentInfo);
+
+    const newOrder = {
+      items: cart,
+      total: total,
+      shippingInfo: shippingInfo,
+      paymentInfo: paymentInfo,
+    };
+
+    // Dispatch the action to add the order to the Redux store
+    dispatch(addOrder(newOrder));
     alert('Order placed successfully!');
+
+    // Navigate to the OrderPage
+    navigate('/orders');
   };
 
   return (
@@ -42,7 +55,6 @@ const CheckoutFormPage = () => {
       
       {/* Two Column Layout */}
       <div className="flex flex-wrap lg:flex-nowrap">
-        
         {/* Left Section: Shipping Information */}
         <div className="w-full lg:w-2/3 lg:pr-6">
           <form onSubmit={handleSubmit}>
