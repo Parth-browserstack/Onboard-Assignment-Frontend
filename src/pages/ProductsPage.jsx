@@ -33,15 +33,22 @@ const ProductsPage = () => {
   };
 
   const filteredProducts = products.filter(product => {
-    const isCategoryMatch = selectedCategory === 'All' || selectedCategory === ''
+    // Make both category and selectedCategory lowercase to avoid case sensitivity issues
+    const category = product.category?.toLowerCase(); 
+    const selectedCategoryLower = selectedCategory?.toLowerCase();
+  
+    const isCategoryMatch = selectedCategoryLower === 'all' || selectedCategoryLower === ''
       ? true
-      : product.category === selectedCategory;
-
-    const isMinPriceMatch = minPrice === '' || product.price >= parseFloat(minPrice);
-    const isMaxPriceMatch = maxPrice === '' || product.price <= parseFloat(maxPrice);
-
+      : category === selectedCategoryLower;
+  
+    // Ensure price is a number and filter based on minPrice and maxPrice
+    const productPrice = parseFloat(product.price);
+    const isMinPriceMatch = minPrice === '' || productPrice >= parseFloat(minPrice);
+    const isMaxPriceMatch = maxPrice === '' || productPrice <= parseFloat(maxPrice);
+  
     return isCategoryMatch && isMinPriceMatch && isMaxPriceMatch;
   });
+  
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
