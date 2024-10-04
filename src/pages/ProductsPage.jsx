@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../features/productsSlice';
 import { addToCart } from '../features/cartSlice';
 import { Header } from '../components/Header';
-import { Link } from 'react-router-dom'; // **Import Link** from react-router-dom
+import { Link } from 'react-router-dom';
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -13,6 +13,9 @@ const ProductsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
+
+  // Disable button while adding item to cart
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -33,25 +36,25 @@ const ProductsPage = () => {
   };
 
   const filteredProducts = products.filter(product => {
-    // Make both category and selectedCategory lowercase to avoid case sensitivity issues
-    const category = product.category?.toLowerCase(); 
+    const category = product.category?.toLowerCase();
     const selectedCategoryLower = selectedCategory?.toLowerCase();
-  
+
     const isCategoryMatch = selectedCategoryLower === 'all' || selectedCategoryLower === ''
       ? true
       : category === selectedCategoryLower;
-  
-    // Ensure price is a number and filter based on minPrice and maxPrice
+
     const productPrice = parseFloat(product.price);
     const isMinPriceMatch = minPrice === '' || productPrice >= parseFloat(minPrice);
     const isMaxPriceMatch = maxPrice === '' || productPrice <= parseFloat(maxPrice);
-  
+
     return isCategoryMatch && isMinPriceMatch && isMaxPriceMatch;
   });
-  
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
+  const handleAddToCart = async (product) => {
+    if (isAdding) return; // Prevent multiple clicks
+    setIsAdding(true);
+    await dispatch(addToCart(product)); // Assuming addToCart is an async action
+    setIsAdding(false);
   };
 
   return (
@@ -59,19 +62,16 @@ const ProductsPage = () => {
       <Header />
       <h1 className="text-4xl font-bold text-center mb-8">Products</h1>
 
-      {/* Main layout with sidebar for filters */}
       <div className="flex flex-wrap lg:flex-nowrap">
-        {/* Sidebar for filters */}
         <aside className="w-full lg:w-1/4 mb-6 lg:mb-0 lg:mr-6">
           <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold mb-4">Filters</h2>
             
-            {/* Category Filter */}
             <div className="mb-4">
               <label htmlFor="category" className="block text-lg font-semibold mb-2">Category:</label>
               <select
                 id="category"
-                value={selectedCategory} 
+                value={selectedCategory}
                 onChange={handleCategoryChange}
                 className="border p-2 rounded w-full"
               >
@@ -83,7 +83,6 @@ const ProductsPage = () => {
               </select>
             </div>
 
-            {/* Price Filter */}
             <div className="flex space-x-4">
               <div>
                 <label htmlFor="minPrice" className="block text-lg font-semibold mb-2">Min Price:</label>
@@ -111,7 +110,6 @@ const ProductsPage = () => {
           </div>
         </aside>
 
-        {/* Products grid */}
         <section className="w-full lg:w-3/4">
           {status === 'loading' && <p className="text-center">Loading...</p>}
           {status === 'failed' && <p className="text-red-500 text-center">Error fetching products: {error}</p>}
@@ -138,9 +136,10 @@ const ProductsPage = () => {
                   <p className="text-yellow-500 mb-3">Rating: {product.rating}</p>
                   <button
                     onClick={() => handleAddToCart(product)}
-                    className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-200"
+                    className={`w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-200 ${isAdding ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={isAdding} // Disable button while adding to cart
                   >
-                    Add to Cart
+                    {isAdding ? 'Adding...' : 'Add to Cart'}
                   </button>
                 </div>
               ))

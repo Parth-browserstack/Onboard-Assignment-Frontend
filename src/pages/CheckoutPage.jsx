@@ -38,6 +38,10 @@ const CheckoutPage = () => {
   };
 
   const handleProceed = () => {
+    if (cart.length === 0) {
+      alert('Your cart is empty. Please add items to your cart before proceeding to checkout.');
+      return; // Stop further execution
+    }
     navigate('/checkoutformpage'); // Navigate to checkout form page
   };
 

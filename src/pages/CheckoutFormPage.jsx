@@ -39,6 +39,7 @@ const CheckoutFormPage = () => {
       total: total,
       shippingInfo: shippingInfo,
       paymentInfo: paymentInfo,
+      date: new Date().toLocaleString(),
     };
 
     // Dispatch the action to add the order to the Redux store
