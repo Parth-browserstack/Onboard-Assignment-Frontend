@@ -7,13 +7,16 @@ import OrderPage from './pages/OrderPage';
 import LoginPage from './pages/LoginPage';
 import ProductDetails from './pages/ProductDetails';
 import CheckoutFormPage from './pages/CheckoutFormPage';
+import Footer from './components/Footer';
+import { Header } from './components/Header';
+
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
         <div className="App">
-        
+          <Header />
           <Routes>
             <Route path="/" element={<ProductsPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
@@ -22,6 +25,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/checkoutformpage" element={<CheckoutFormPage />} />
           </Routes>
+          <Footer />
         </div>
       </Router>
     </Provider>

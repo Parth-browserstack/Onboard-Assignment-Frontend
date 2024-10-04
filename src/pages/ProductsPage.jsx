@@ -59,7 +59,7 @@ const ProductsPage = () => {
 
   return (
     <div className="container mx-auto p-6 max-w-screen-xl">
-      <Header />
+    
       <h1 className="text-4xl font-bold text-center mb-8">Products</h1>
 
       <div className="flex flex-wrap lg:flex-nowrap">
