@@ -9,7 +9,7 @@ const initialState = {
 
 // User login
 export const loginUser = createAsyncThunk('user/loginUser', async (credentials) => {
-  const response = await axios.post('https://fake-ecommerce-app-api.onrender.com/login', credentials);
+  const response = await axios.post('https://fake-ecommerce-app-api.onrender.com/auth/login', credentials);
   return response.data; // Assuming the API returns user info
 });
 
